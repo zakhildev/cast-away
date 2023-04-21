@@ -1,17 +1,11 @@
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tab?.url.startsWith("chrome://")) {
-    return;
-  }
   if (changeInfo.status == "complete") {
     chrome.scripting.executeScript({
       target: {
         tabId: tabId,
       },
       func: () => {
-        if (
-          location.hostname !== "www.youtube.com" ||
-          location.protocol !== "https"
-        ) {
+        if (location.hostname !== "www.youtube.com") {
           return;
         }
         const hideButton = () => {
@@ -23,7 +17,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         setTimeout(() => {
           hideButton();
           console.log("[Cast Away] Cast to TV button hidden!");
-        }, 500);
+        }, 100);
       },
     });
   }
